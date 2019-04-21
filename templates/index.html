@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/css.css') }}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="название...">
+            </div>
+            <button type="submit" class="btn btn-danger">Поиск</button>
+          </form>
+
+          <ul class="nav navbar-nav navbar-right">
+              <li class="active"><a href="/">Главная</a></li>
+              <li class=""><a href="#">Каталог манги</a></li>
+              <li class=""><a href="{{ url_for('manga_updates') }}">Обновления</a></li>
+              <li class=""><a href="{{ url_for("create_mang") }}">Добавить мангу</a></li>
+              {% if username %}
+              <li class=""><a href="{{ url_for("user_page",username=username) }}">{{ username }}</a></li>
+              {% endif %}
+          </ul>
+      </div>
+</nav>
+
+
+<div class="container">
+<div class="row">
+
+{# список манги ... manga list#}
+
+<div class="col-lg-10 col-md-10 col-sm-12">
+{% for manga in mangas %}
+    {% for g in manga.genres %}
+        {% if genrefilt==g.name or genrefilt=="all" %}
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="thumbnail">
+                      <img src={{ manga.img }} alt={{ manga.description }}>
+                      <div class="caption">
+                        <h3>{{ manga.name }}</h3>
+                        <p>
+            {% for genre in manga.genres %}
+                <a href="{{ url_for('genre_filter', genre=genre.name) }}"><span class="label label-success">{{ genre.runame }}</span></a>
+            {% endfor %}
+                        </p>
+                        <p><a href="{{ url_for('give_manga', slug=manga.slug) }}" class="btn btn-primary" role="button">Читать</a> <a href="#" class="btn btn-default btn-right" role="button"><span class="glyphicon glyphicon-heart"></span></a></p>
+                      </div>
+                    </div>
+                  </div>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+</div>
+
+  <div class="col-lg-2 col-md-2 col-sm-12">
+    <ul class="nav nav-pills nav-stacked pagination-sm">
+        <li><a href="{{ url_for('genre_filter', genre="all") }}">все</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="art") }}">арт</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="boevik") }}">боевик</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="boevye_iskusstva") }}">боевые искусства</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="vampiry") }}">вампиры</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="garem") }}">гарем</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="gendernaya_intriga") }}">гендерная интрига</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="geroicheskoe_fehntezi") }}">героическое фэнтези</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="detektiv") }}">детектив</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="dzyosehj") }}">дзёсэй</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="dodzinsi") }}">додзинси</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="drama") }}">драма</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="igra") }}">игра</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="istoriya") }}">история</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="kiberpank") }}">киберпанк</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="kodomo") }}">кодомо</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="komediya") }}">комедия</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="maho-syodzyo") }}">махо-сёдзё</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="mekha") }}">меха</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="nauchnaya_fantastika") }}">научная фантастика</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="povsednevnost") }}">повседневность</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="postapokaliptika") }}">постапокалиптика</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="priklyucheniya") }}">приключения</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="psihologiya") }}">психология</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="romantika") }}">романтика</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="samurajskij_boevik") }}">самурайский боевик</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="sverhestestvennoe") }}">сверхъестественное</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="syodzyo") }}">сёдзё</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="syodzyo-aj") }}">сёдзё-ай</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="syonehn") }}">сёнэн</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="syonehn-aj") }}">сёнэн-ай</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="sport") }}">спорт</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="sehjnehn") }}">сэйнэн</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="tragediya") }}">трагедия</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="triller") }}">триллер</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="uzhasy") }}">ужасы</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="fehntezi") }}">фэнтези</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="shkola") }}">школа</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="ehtti") }}">этти</a></li>
+        <li><a href="{{ url_for('genre_filter', genre="yuri") }}">юри</a></li>
+    </ul>
+  </div>
+
+
+</div>
+</div>
+
+
+
+
+
+{#<a href="{{ url_for("create_mang") }}">Добавить мангу</a>#}
+{#<p>Список</p>#}
+{#{% for manga in mangas %}#}
+{#<a href=/manga/{{ manga.slug }}>{{ manga.name }}</a><br>#}
+{#{% endfor %}#}
+
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+</body>
+</html>

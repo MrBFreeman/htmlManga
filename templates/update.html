@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/css.css') }}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="название...">
+            </div>
+            <button type="submit" class="btn btn-danger">Поиск</button>
+          </form>
+
+          <ul class="nav navbar-nav navbar-right">
+              <li class=""><a href="/">Главная</a></li>
+              <li class=""><a href="#">Каталог манги</a></li>
+              <li class=""><a href="{{ url_for('manga_updates') }}">Обновления</a></li>
+              <li class=""><a href="{{ url_for("create_mang") }}">Добавить мангу</a></li>
+          </ul>
+      </div>
+</nav>
+
+<div class="container">
+<div class="row">
+
+<div class="list-group col-md-10">
+  <li href="#" class="list-group-item active">Манга<span class="badge">дата</span></li>
+    {% for chapter in order %}
+     <a href="{{ url_for('give_chapter',slug=chapter.manga.slug, id=chapter.id) }}" class="list-group-item">{{ chapter.manga.name }}    {{ chapter.id }}-{{ chapter.name }}<span class="badge">{{ chapter.date.day}}/{{chapter.date.month }}</span></a>
+
+{% endfor %}
+</div>
+</div>
+</div>
+</body>
+</html>

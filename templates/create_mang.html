@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{#    <form method="POST" enctype="multipart/form-data">#}
+{#        <input type="text" name="name">#}
+{#        <input type="text" name="description">#}
+{#        <input type="file" name="img" >#}
+{#        <input type="submit" value="Создать">#}
+{#    </form>#}
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>upload</title>
+
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/css.css') }}" rel="stylesheet">
+</head>
+<body>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+
+<div class="container">
+<div class="col-md-8 col-md-offset-2">
+    <h3>Добавление манги</h3>
+    <div class="alert alert-success">Для создания манги на сайте необходимо загрузить изображене из форматов:jpeg,png,gif ,а также добавить название</div>
+
+<form method="POST" enctype="multipart/form-data">
+	<!-- COMPONENT START -->
+	<div class="form-group">
+	<label class=newbtn>
+	    <span class="input-group-addon">Выберите файлы</span>
+	    <input id="pic" type="file" name="img">
+	</label>
+	</div>
+	<!-- COMPONENT END -->
+
+    <div class="input-group col-md-12">
+
+      <input type="text" class="form-control" name="name" placeholder="name">
+      <input type="text" class="form-control" name="description" placeholder="description">
+ {#      <input type="text" class="form-control" name="genre" placeholder="genre">   #}
+    </div>
+
+    <button class="btn btn-default col-md-12" type="submit" value="Создать">Добавить</button>
+    <div id="app">
+    {% for genre in genres %}
+        <span class="label label-success" @click="active({{ genre.id }})">{{ genre.runame }}</span>
+    {% endfor %}
+    <input :value="genres" style="display:none;" name="genres" multiple="">
+</div>
+</form>
+
+
+</div>
+</div>
+
+<script>
+
+    var app=new Vue({
+        el:"#app",
+        data:{
+            genres:"",
+
+        },
+        delimiters: ['[[',']]'],
+
+        methods:{
+            active: function (name) {
+                console.log(name);
+                if (this.genres.indexOf("#"+name+"#")===-1){
+                    {#console.log(this.genres.indexOf("#"+name+"#"));#}
+                    if (!this.genres) {
+                        this.genres ="#" + name + "#";
+                    }
+                    else {
+                        this.genres ="#" + name + this.genres;
+                    }
+                }
+                else {
+                    console.log(this.genres);
+                    {#this.genres = name + "#" + this.genres;#}
+                }
+            }
+        }
+    })
+
+</script>
+
+<script>
+ $('.newbtn').bind("click" , function () {
+        $('#pic').click();
+ });
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>upload</title>
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/css.css') }}" rel="stylesheet">
+</head>
+<body>
+
+
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+
+<div class="container">
+<div class="col-md-8 col-md-offset-2">
+    <h3>Добавление глав манги</h3>
+    <div class="alert alert-success">Для загрузки главы манги на сайт необходимо сформировать группу изображений из форматов:jpeg,png,gif ,и загрузить их на сайт.Изображения сортируются по имени с порядке возрастания</div>
+
+<form method="POST" enctype="multipart/form-data">
+	<!-- COMPONENT START -->
+	<div class="form-group">
+	<label class=newbtn>
+	    <span class="input-group-addon">Выберите файлы</span>
+	    <input id="pic" type="file" name="file[]" multiple="">
+	</label>
+	</div>
+	<!-- COMPONENT END -->
+
+    <div class="input-group">
+
+      <input type="text" class="form-control" name="name" placeholder="номер главы">
+       <span class="input-group-btn">
+        <button class="btn btn-default" type="submit" value="upload">Добавить</button>
+      </span>
+    </div>
+
+</form>
+
+
+</div>
+</div>
+
+<script>
+ $('.newbtn').bind("click" , function () {
+        $('#pic').click();
+ });
+</script>
+</body>
+</html>
